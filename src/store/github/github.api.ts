@@ -29,7 +29,13 @@ export const githubApi = createApi({
             query: (username: string) => ({
                 url: `users/${username}/repos`
             })
-        })
+        }),
+/*        //С помощью данного метода можно создавать на сервере объекты, если сервер поддерживает функционал
+        createUser: build.mutation<any, void>({
+            query: () => ({
+                url: ``
+            })
+        })*/
     })
 })
 
