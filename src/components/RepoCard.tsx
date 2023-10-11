@@ -39,13 +39,13 @@ const RepoCard: FC<RepoCardProps> = ({repo}) => {
                 <p className={'text-sm font-thin'}>{repo?.description}</p>
 
                 {!isFavourite && <button
-                    className={'text-2xl py-1 px-2 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all'}
+                    className={'text-2xl py-1 px-2 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all hover:bg-yellow-300'}
                     onClick={addToFavorites}
                 ><MdAssignmentAdd/>
                 </button>}
 
                 {isFavourite && <button
-                    className={'text-2xl py-1 px-2 bg-red-600 rounded hover:shadow-md transition-all'}
+                    className={'text-2xl py-1 px-2 bg-red-600 rounded hover:shadow-md hover:bg-red-400 transition-all'}
                     onClick={removeFromFavorites}
                 ><AiOutlineDelete/>
                 </button>}
