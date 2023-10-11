@@ -1,6 +1,7 @@
 import React from 'react';
 import {useAppSelector} from "../hooks/redux";
 
+
 export function FavoritesPage() {
     const {favourites} = useAppSelector(state => state.github)
 

@@ -2,6 +2,8 @@ import React, {FC, useState} from 'react';
 import {IRepo} from "../modals/modals";
 import {useActions} from "../hooks/actions";
 import {useAppSelector} from "../hooks/redux";
+import {MdAssignmentAdd} from "react-icons/md";
+import {AiOutlineDelete} from "react-icons/ai";
 
 interface RepoCardProps {
     repo: IRepo
@@ -37,15 +39,15 @@ const RepoCard: FC<RepoCardProps> = ({repo}) => {
                 <p className={'text-sm font-thin'}>{repo?.description}</p>
 
                 {!isFavourite && <button
-                    className={'py-2 px-4 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all'}
+                    className={'text-2xl py-1 px-2 bg-yellow-400 mr-2 rounded hover:shadow-md transition-all'}
                     onClick={addToFavorites}
-                >Add
+                ><MdAssignmentAdd/>
                 </button>}
 
                 {isFavourite && <button
-                    className={'py-2 px-4 bg-red-600 rounded hover:shadow-md transition-all'}
+                    className={'text-2xl py-1 px-2 bg-red-600 rounded hover:shadow-md transition-all'}
                     onClick={removeFromFavorites}
-                >Remove
+                ><AiOutlineDelete/>
                 </button>}
             </a>
         </div>
