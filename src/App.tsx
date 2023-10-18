@@ -19,7 +19,7 @@ function App() {
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
                         {
-                            pizzas.map((product => (<PizzaBlock product={product}/>)))
+                            pizzas.map((product => (<PizzaBlock key={product.id} product={product}/>)))
                         }
                     </div>
                 </div>
