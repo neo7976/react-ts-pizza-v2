@@ -1,8 +1,11 @@
-# Getting Started with Create React App
+#Помощник
+https://peaceful-dove-11d.notion.site/React-Pizza-v2-REMASTERED-655fa3a5ea4f4bce8faeee2f28a8fb22
 
-https://www.youtube.com/watch?v=1_4yH0C9iq0
+# Урок 3-ий
+https://www.youtube.com/watch?v=EXRqsxBNDzE
 
-https://react-hook-form.com/get-started
+# Урок 4-ый
+https://www.youtube.com/watch?v=Y8j2GzMbaAw
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
