@@ -1,6 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {set} from "react-hook-form";
 
 const Sort = () => {
+
+    const [open, setOpen] = useState(false);
+    const [selectedListItem, setSelectedListItem] = useState(0);
+    const list = ['популярности', 'цене', 'алфавиту'];
+    const sortName = list[selectedListItem];
+
+    const onClickItem = (index: number) => {
+        setSelectedListItem(index);
+        setOpen(false);
+    }
     return (
         <div className="sort">
             <div className="sort__label">
@@ -17,15 +28,20 @@ const Sort = () => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span>популярности</span>
+                <span onClick={() => setOpen(!open)}>{sortName}</span>
             </div>
-            <div className="sort__popup">
+            {open && <div className="sort__popup">
                 <ul>
-                    <li className="active">популярности</li>
-                    <li>цене</li>
-                    <li>алфавиту</li>
+                    {list.map((name, index) => (
+                        <li
+                            key={index}
+                            onClick={() => onClickItem(index)}
+                            className={selectedListItem !== index ? '' : 'active'}>
+                            {name}
+                        </li>
+                    ))}
                 </ul>
-            </div>
+            </div>}
         </div>
     );
 };
