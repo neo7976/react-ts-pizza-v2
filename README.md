@@ -1,4 +1,5 @@
-# Getting Started with Create React App
+#Помощник
+https://peaceful-dove-11d.notion.site/React-Pizza-v2-REMASTERED-655fa3a5ea4f4bce8faeee2f28a8fb22
 
 # Урок 3-ий
 https://www.youtube.com/watch?v=EXRqsxBNDzE
