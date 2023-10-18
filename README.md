@@ -1,8 +1,7 @@
 # Getting Started with Create React App
 
-https://www.youtube.com/watch?v=1_4yH0C9iq0
-
-https://react-hook-form.com/get-started
+# Урок третитий
+https://www.youtube.com/watch?v=EXRqsxBNDzE
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
