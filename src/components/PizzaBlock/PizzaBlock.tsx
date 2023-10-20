@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {IProduct} from "../modals/products";
+import {IProduct} from "../../modals/products";
 
 interface PizzaBlockProps {
     product: IProduct
