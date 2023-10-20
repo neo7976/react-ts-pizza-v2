@@ -3,10 +3,23 @@ import Header from "./components/Header";
 import Categories from "./components/Categories";
 import Sort from "./components/Sort";
 import PizzaBlock from "./components/PizzaBlock";
-import pizzas from './assets/pizza.json'
+import items from './assets/pizza.json'
+import axios from "axios";
+import {IProduct} from "./modals/products";
+import {useEffect, useState} from "react";
 
 function App() {
-    console.log(pizzas);
+    // const [items, setItems] = useState<IProduct[]>([]);
+    // useEffect(
+    //     () => {
+    //         getPizzas()
+    //     }, [])
+    //
+    // async function getPizzas() {
+    //     const response = await axios.get<IProduct[]>('https://pizza-v2.free.beeceptor.com/pizzas');
+    //     setItems(response.data)
+    // }
+
     return (
         <div className="wrapper">
             <Header/>
@@ -19,7 +32,7 @@ function App() {
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
                         {
-                            pizzas.map((product => (<PizzaBlock key={product.id} product={product}/>)))
+                            items.map((items) => (<PizzaBlock key={items.id} product={items}/>))
                         }
                     </div>
                 </div>
