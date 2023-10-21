@@ -10,6 +10,9 @@ https://www.youtube.com/watch?v=Y8j2GzMbaAw
 # Урок 5-ый
 https://www.youtube.com/watch?v=_EiClUmTlNg
 
+# Урок 7-ый
+https://www.youtube.com/watch?v=eUt-M-YRjyg
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
