@@ -1,4 +1,4 @@
-#Помощник
+# Помощник
 https://peaceful-dove-11d.notion.site/React-Pizza-v2-REMASTERED-655fa3a5ea4f4bce8faeee2f28a8fb22
 
 # Урок 3-ий
@@ -15,6 +15,9 @@ https://www.youtube.com/watch?v=eUt-M-YRjyg
 
 # Урок 8-ый
 https://www.youtube.com/watch?v=7t9_nmg_Yzg
+
+# Урок 9-ый
+https://www.youtube.com/watch?v=X_a-ba9hxwA
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
