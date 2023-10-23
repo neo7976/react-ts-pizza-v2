@@ -15,6 +15,7 @@ const Home = () => {
     //     () => {
     //         setIsLoading(true)
     //         getPizzas()
+    // window.scrollTo(0, 0);
     //     }, [])
     //
     // async function getPizzas() {
@@ -24,20 +25,20 @@ const Home = () => {
     // }
 
     return (
-        <>
-                <div className="content__top">
-                    <Categories/>
-                    <Sort/>
-                </div>
-                <h2 className="content__title">Все пиццы</h2>
-                <div className="content__items">
-                    {
-                        isLoading ? [...new Array(10)].map((_, index) => <PizzaBlockSkeleton key={index}/>)
-                            : (items.map((items) =>
-                                <PizzaBlock key={items.id} product={items}/>))
-                    }
-                </div>
-        </>
+        <div className={'container'}>
+            <div className="content__top">
+                <Categories/>
+                <Sort/>
+            </div>
+            <h2 className="content__title">Все пиццы</h2>
+            <div className="content__items">
+                {
+                    isLoading ? [...new Array(10)].map((_, index) => <PizzaBlockSkeleton key={index}/>)
+                        : (items.map((items) =>
+                            <PizzaBlock key={items.id} product={items}/>))
+                }
+            </div>
+        </div>
     );
 };
 
