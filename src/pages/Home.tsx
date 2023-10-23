@@ -25,12 +25,11 @@ const Home = () => {
     //         window.scrollTo(0, 0);
     //         //Обновляем при изменении categoryId, sortType
     //     }, [categoryId, sortType])
-
+    //
     // async function getPizzas() {
     // const url = 'https://pizza-v2.free.beeceptor.com/'
-    // const response = await axios.get<IProduct[]>(`${url}pizzas?
-    // ${categoryId > 0 ? `category=${categoryId}` : ''}
-    // &sortBy=${sortType.sortProperty}&order=desc`);
+    //     const category = categoryId > 0 ? `category=${categoryId}` : '';
+    //     const response = await axios.get<IProduct[]>(`${url}pizzas?${category}&sortBy=${sortType.sortProperty}&order=desc`);
     //     setItems(response.data)
     //     setIsLoading(false)
     // }
