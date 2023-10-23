@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 
-const Sort = () => {
+interface SortProps {
+    value: number,
+    onChangeSort: (i: number) => void
+}
+
+const Sort: FC<SortProps> = ({value, onChangeSort}) => {
 
     const [open, setOpen] = useState(false);
-    const [selectedListItem, setSelectedListItem] = useState(0);
     const list = ['популярности', 'цене', 'алфавиту'];
-    const sortName = list[selectedListItem];
+    const sortName = list[value];
 
     const onClickItem = (index: number) => {
-        setSelectedListItem(index);
+        onChangeSort(index);
         setOpen(false);
     }
     return (
@@ -35,7 +39,7 @@ const Sort = () => {
                         <li
                             key={index}
                             onClick={() => onClickItem(index)}
-                            className={selectedListItem !== index ? '' : 'active'}>
+                            className={value !== index ? '' : 'active'}>
                             {name}
                         </li>
                     ))}
