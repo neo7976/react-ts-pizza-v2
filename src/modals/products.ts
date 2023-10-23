@@ -8,3 +8,8 @@ export interface IProduct {
     category: number;
     rating:   number;
 }
+
+export interface ISort {
+    name: string,
+    sortProperty: string,
+}

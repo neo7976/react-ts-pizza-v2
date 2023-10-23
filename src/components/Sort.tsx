@@ -1,17 +1,21 @@
 import React, {FC, useState} from 'react';
+import {ISort} from "../modals/products";
 
 interface SortProps {
-    value: number,
-    onChangeSort: (i: number) => void
+    value: ISort,
+    onChangeSort: (i: ISort) => void
 }
 
 const Sort: FC<SortProps> = ({value, onChangeSort}) => {
 
     const [open, setOpen] = useState(false);
-    const list = ['популярности', 'цене', 'алфавиту'];
-    const sortName = list[value];
+    const list = [
+        {name: 'популярности', sortProperty: 'rating'},
+        {name: 'цене', sortProperty: 'price'},
+        {name: 'алфавиту', sortProperty: 'title'}
+    ];
 
-    const onClickItem = (index: number) => {
+    const onClickItem = (index: ISort) => {
         onChangeSort(index);
         setOpen(false);
     }
@@ -31,16 +35,16 @@ const Sort: FC<SortProps> = ({value, onChangeSort}) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen(!open)}>{sortName}</span>
+                <span onClick={() => setOpen(!open)}>{value.name}</span>
             </div>
             {open && <div className="sort__popup">
                 <ul>
-                    {list.map((name, index) => (
+                    {list.map((obj, index) => (
                         <li
                             key={index}
-                            onClick={() => onClickItem(index)}
-                            className={value !== index ? '' : 'active'}>
-                            {name}
+                            onClick={() => onClickItem(obj)}
+                            className={value.sortProperty !== obj.sortProperty ? '' : 'active'}>
+                            {obj.name}
                         </li>
                     ))}
                 </ul>
