@@ -19,22 +19,22 @@
 }
 
 .icon {
-  width: 27px;
-  height: 27px;
+  width: 0;
+  height: 0;
   //Делаем прозрачнее
   opacity: 0.3;
   position: absolute;
-  left: 5px;
-  top: 10px;
+  left: 10px;
+  top: 15px;
 }
 
 .clearIcon{
-  width: 27px;
-  height: 27px;
+  //width: 27px;
+  //height: 27px;
   opacity: 0.3;
   position: absolute;
-  right:  5px;
-  top: 10px;
+  right:  10px;
+  top: 15px;
 
   &:hover {
     opacity: 0.8;
