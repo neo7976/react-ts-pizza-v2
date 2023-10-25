@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
@@ -7,10 +7,16 @@ import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import {IProduct, ISort} from "../modals/products";
 import axios from "axios";
 
-const Home = () => {
+
+interface HomeProps {
+    search: string,
+    setSearch: (value: (((prevState: string) => string) | string)) => void
+}
+
+const Home: FC<HomeProps> = ({search, setSearch}) => {
     const initSortType: ISort = {
         name: 'популярности',
-        sortProperty: 'rating'
+        sortProperty: 'rating',
     }
 
     const [isLoading, setIsLoading] = useState(false);
@@ -24,12 +30,13 @@ const Home = () => {
             getPizzas()
             window.scrollTo(0, 0);
             //Обновляем при изменении categoryId, sortType
-        }, [categoryId, sortType])
+        }, [categoryId, sortType, search.trim().length > 3])
 
     async function getPizzas() {
         const url: string = 'http://localhost:9004/'
         const category = categoryId > 0 ? `category=${categoryId}` : '';
-        const response = await axios.get<IProduct[]>(`${url}pizzas/?${category}&sortBy=${sortType.sortProperty}&order=desc`);
+        const startWithTitle = search.trim().length > 3 ? `startWithTitle=${search}` : ''
+        const response = await axios.get<IProduct[]>(`${url}pizzas/?${category}&${startWithTitle}&sortBy=${sortType.sortProperty}&order=desc`);
         // const response = await axios.get<IProduct[]>(`${url}pizzas`);
         setItems(response.data)
         setIsLoading(false)
