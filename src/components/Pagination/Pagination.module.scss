@@ -1,0 +1,56 @@
+.root {
+
+
+  li {
+    margin-right: 5px;
+    display: inline-grid;
+    text-align: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    border: 1px solid #fe5f1e;
+    border-radius: 45px;
+    transition: all 0.15s ease-in-out;
+    cursor: pointer;
+    user-select: none;
+
+    &:active {
+      filter: brightness(85%);
+      transform: translateY(2px);
+    }
+
+
+    a {
+      color: #fe5f1e;
+    }
+
+    &:hover {
+      background-color: rgba(254, 95, 30, 0.82);
+      border: 1px solid rgba(254, 95, 30, 0.82);
+      scale: 110%;
+      margin-left: 10px;
+
+      a {
+        color: white;
+      }
+    }
+  }
+
+  :global {
+    .selected {
+      background-color: #fe5f1e;
+
+      a {
+        color: white;
+      }
+    }
+  }
+
+
+  /*  global указываем, так как это не наш класс*/
+  //:global {
+  //  .previous {
+  //    background-color: red;
+  //  }
+  //}
+}

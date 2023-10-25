@@ -6,6 +6,8 @@ import items from "../assets/pizza.json";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import {IProduct, ISort} from "../modals/products";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
+import Pagination from "../components/Pagination/Pagination";
 
 
 interface HomeProps {
@@ -33,6 +35,7 @@ const Home: FC<HomeProps> = ({search, setSearch}) => {
         }, [categoryId, sortType, search.trim().length > 3])
 
     async function getPizzas() {
+        // Попробовать сделать на сервере отправку данных по количеству страниц от запроса и настроить там тоже пагинацию
         const url: string = 'http://localhost:9004/'
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const startWithTitle = search.trim().length > 3 ? `startWithTitle=${search}` : ''
@@ -61,6 +64,7 @@ const Home: FC<HomeProps> = ({search, setSearch}) => {
                             <PizzaBlock key={items.id} product={items}/>))
                 }
             </div>
+            <Pagination/>
         </div>
     );
 };
