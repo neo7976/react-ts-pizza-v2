@@ -17,22 +17,23 @@ const Home = () => {
     const [categoryId, setCategoryId] = useState(0);
     const [sortType, setSortType] = useState(initSortType);
 
-    // const [items, setItems] = useState<IProduct[]>([]);
-    // useEffect(
-    //     () => {
-    //         setIsLoading(true)
-    //         getPizzas()
-    //         window.scrollTo(0, 0);
-    //         //Обновляем при изменении categoryId, sortType
-    //     }, [categoryId, sortType])
-    //
-    // async function getPizzas() {
-    // const url = 'https://pizza-v2.free.beeceptor.com/'
-    //     const category = categoryId > 0 ? `category=${categoryId}` : '';
-    //     const response = await axios.get<IProduct[]>(`${url}pizzas?${category}&sortBy=${sortType.sortProperty}&order=desc`);
-    //     setItems(response.data)
-    //     setIsLoading(false)
-    // }
+    const [items, setItems] = useState<IProduct[]>([]);
+    useEffect(
+        () => {
+            setIsLoading(true)
+            getPizzas()
+            window.scrollTo(0, 0);
+            //Обновляем при изменении categoryId, sortType
+        }, [categoryId, sortType])
+
+    async function getPizzas() {
+        const url: string = 'http://localhost:9004/'
+        const category = categoryId > 0 ? `category=${categoryId}` : '';
+        const response = await axios.get<IProduct[]>(`${url}pizzas/?${category}&sortBy=${sortType.sortProperty}&order=desc`);
+        // const response = await axios.get<IProduct[]>(`${url}pizzas`);
+        setItems(response.data)
+        setIsLoading(false)
+    }
 
     const onChangeCategory = (categoryId: number) => {
         setCategoryId(categoryId)
