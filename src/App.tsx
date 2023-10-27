@@ -5,7 +5,6 @@ import NotFound from "./pages/NorFound";
 import {Route, Routes} from "react-router-dom";
 import Cart from "./pages/Cart";
 import {useState} from "react";
-import {decrement, increment} from "./redux/slices/filterSlice";
 import {useAppDispatch, useAppSelector} from "./hooks/hook";
 
 
@@ -18,21 +17,6 @@ function App() {
 
     return (
         <div className="wrapper">
-
-            <button
-                aria-label="Increment value"
-                onClick={() => dispatch(increment())}
-            >
-                Increment
-            </button>
-            <span>{count}</span>
-            <button
-                aria-label="Decrement value"
-                onClick={() => dispatch(decrement())}
-            >
-                Decrement
-            </button>
-
             <Header search={searchValue} setSearch={setSearchValue}/>
             <div className="content">
                 <Routes>
