@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Link} from "react-router-dom";
+import Search from "./Search/Search";
 
-const Header = () => {
+interface HeaderProps {
+    search: string,
+    setSearch: (value: (((prevState: string) => string) | string)) => void
+}
+
+const Header:FC<HeaderProps> = ({ search,  setSearch }) => {
     return (
         <div className="header">
             <div className="container">
@@ -14,6 +20,7 @@ const Header = () => {
                         </div>
                     </div>
                 </Link>
+                <Search search={search} setSearch={setSearch}/>
                 <div className="header__cart">
                     <Link to="/cart" className="button button--cart">
                         <span>520 ₽</span>

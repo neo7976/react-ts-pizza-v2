@@ -1,12 +1,18 @@
+export interface Root {
+    pageCount: number,
+    total: number,
+    data: IProduct[]
+}
+
 export interface IProduct {
-    id:       number;
+    id: number;
     imageUrl: string;
-    title:    string;
-    types:    number[];
-    sizes:    number[];
-    price:    number;
+    title: string;
+    types: number[];
+    sizes: number[];
+    price: number;
     category: number;
-    rating:   number;
+    rating: number;
 }
 
 export interface ISort {
