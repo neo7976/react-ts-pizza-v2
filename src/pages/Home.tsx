@@ -37,9 +37,14 @@ const Home: FC<HomeProps> = ({search, setSearch}) => {
             setIsLoading(true)
             getPizzas()
             window.scrollTo(0, 0);
-            setCurrentPage(1);
             //Обновляем при изменении следующих данных
         }, [categoryId, sortType, search.trim().length > 3, currentPage])
+
+
+    useEffect(
+        () => {
+            setCurrentPage(1);
+        }, [categoryId, sortType, search.trim().length > 3])
 
     async function getPizzas() {
         // Попробовать сделать на сервере отправку данных по количеству страниц от запроса и настроить там тоже пагинацию
