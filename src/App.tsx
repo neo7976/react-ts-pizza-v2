@@ -5,15 +5,10 @@ import NotFound from "./pages/NorFound";
 import {Route, Routes} from "react-router-dom";
 import Cart from "./pages/Cart";
 import {useState} from "react";
-import {useAppDispatch, useAppSelector} from "./hooks/hook";
 
 
 function App() {
     const [searchValue, setSearchValue] = useState('');
-
-    const count = useAppSelector((state) => state.counter.value)
-    const dispatch = useAppDispatch()
-
 
     return (
         <div className="wrapper">

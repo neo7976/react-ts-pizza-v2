@@ -6,8 +6,9 @@ import items from "../assets/pizza.json";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import {IProduct, ISort, Root} from "../modals/products";
 import axios from "axios";
-import ReactPaginate from "react-paginate";
 import Pagination from "../components/Pagination/Pagination";
+import {useAppDispatch, useAppSelector} from "../hooks/hook";
+import {setCategoryId} from "../redux/slices/filtersSlice";
 
 
 interface HomeProps {
@@ -20,13 +21,17 @@ function onChangeSort(setSortType: (value: (((prevState: ISort) => ISort) | ISor
 }
 
 const Home: FC<HomeProps> = ({search, setSearch}) => {
+    const dispatch = useAppDispatch()
+
+
     const initSortType: ISort = {
         name: 'популярности',
         sortProperty: 'rating',
     }
 
     const [isLoading, setIsLoading] = useState(false);
-    const [categoryId, setCategoryId] = useState(0);
+    // const [categoryId, setCategoryId] = useState(0);
+    const categoryId = useAppSelector((state) => state.filter.categoryId)
     const [sortType, setSortType] = useState(initSortType);
     const [currentPage, setCurrentPage] = useState(1);
     const [countPage, setCountPage] = useState(1);
@@ -60,7 +65,7 @@ const Home: FC<HomeProps> = ({search, setSearch}) => {
     }
 
     const onChangeCategory = (categoryId: number) => {
-        setCategoryId(categoryId)
+        dispatch(setCategoryId(categoryId))
         setCurrentPage(1);
     }
 
