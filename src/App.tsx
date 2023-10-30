@@ -8,14 +8,13 @@ import {useState} from "react";
 
 
 function App() {
-    const [searchValue, setSearchValue] = useState('');
 
     return (
         <div className="wrapper">
-            <Header search={searchValue} setSearch={setSearchValue}/>
+            <Header/>
             <div className="content">
                 <Routes>
-                    <Route path="/" element={<Home search={searchValue} setSearch={setSearchValue}/>}/>
+                    <Route path="/" element={<Home/>}/>
                     <Route path="/cart" element={<Cart/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>

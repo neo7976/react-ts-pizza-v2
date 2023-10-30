@@ -7,15 +7,12 @@ import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import {IProduct, Root} from "../modals/products";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
-import {useAppSelector} from "../hooks/hook";
+import {useAppDispatch, useAppSelector} from "../hooks/hook";
 
-interface HomeProps {
-    search: string,
-    setSearch: (value: (((prevState: string) => string) | string)) => void
-}
-
-const Home: FC<HomeProps> = ({search, setSearch}) => {
+const Home: FC = () => {
     const [isLoading, setIsLoading] = useState(false);
+
+    const search = useAppSelector((state) => state.search.searchValue)
     const {categoryId, sort} = useAppSelector((state) => state.filter)
     const [currentPage, setCurrentPage] = useState(1);
     const [countPage, setCountPage] = useState(1);
