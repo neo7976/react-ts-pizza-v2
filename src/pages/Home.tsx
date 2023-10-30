@@ -8,14 +8,15 @@ import {IProduct, Root} from "../modals/products";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
+import {setCountPage, setCurrentPage} from "../redux/slices/paginationSlice";
 
 const Home: FC = () => {
+    const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
 
     const search = useAppSelector((state) => state.search.searchValue)
     const {categoryId, sort} = useAppSelector((state) => state.filter)
-    const [currentPage, setCurrentPage] = useState(1);
-    const [countPage, setCountPage] = useState(1);
+    const {currentPage} = useAppSelector((state) => state.pagination)
 
     const [items, setItems] = useState<IProduct[]>([]);
     useEffect(
@@ -29,7 +30,7 @@ const Home: FC = () => {
 
     useEffect(
         () => {
-            setCurrentPage(1);
+            dispatch(setCurrentPage(1));
         }, [categoryId, sort.sortProperty, search.trim().length > 3])
 
     async function getPizzas() {
@@ -41,7 +42,7 @@ const Home: FC = () => {
         const page = `page=${currentPage}`
         const response = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
         setItems(response.data.data);
-        setCountPage(response.data.pageCount)
+        dispatch(setCountPage(response.data.pageCount))
         setIsLoading(false)
     }
 
@@ -60,7 +61,7 @@ const Home: FC = () => {
                             <PizzaBlock key={items.id} product={items}/>))
                 }
             </div>
-            <Pagination onChangePage={(number) => setCurrentPage(number)} countPage={countPage}/>
+            <Pagination/>
         </div>
     );
 };

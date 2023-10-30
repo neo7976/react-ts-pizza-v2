@@ -1,14 +1,12 @@
 import React, {FC, useState} from 'react';
 import {setCategoryId} from "../redux/slices/filtersSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
-
-
-
+import {setCurrentPage} from "../redux/slices/paginationSlice";
 
 const Categories: FC = () => {
     const onChangeCategory = (categoryId: number) => {
         dispatch(setCategoryId(categoryId))
-        // setCurrentPage(1);
+        dispatch(setCurrentPage(1));
     }
 
     const dispatch = useAppDispatch();
