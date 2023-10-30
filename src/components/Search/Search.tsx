@@ -2,14 +2,14 @@ import React from 'react';
 import styles from './Search.module.scss'
 import {GrClose} from "react-icons/gr";
 import {BsSearch} from "react-icons/bs";
+import {useAppDispatch, useAppSelector} from "../../hooks/hook";
+import {setSearch} from "../../redux/slices/searchSlice";
 
 
-interface SearchProps {
-    search: string,
-    setSearch: (value: (((prevState: string) => string) | string)) => void
-}
+const Search = () => {
+    const dispatch = useAppDispatch();
+    const search = useAppSelector((state) => state.search.searchValue)
 
-const Search = ({search, setSearch}: SearchProps) => {
     return (
         <div className={styles.root}>
             <div className={styles.icon}><BsSearch/></div>
@@ -18,12 +18,12 @@ const Search = ({search, setSearch}: SearchProps) => {
                 type="text"
                 placeholder={'Поиск пиццы...'}
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) => dispatch(setSearch(event.target.value))}
             />
             {search &&
                 <div
                     className={styles.clearIcon}
-                    onClick={() => setSearch('')}
+                    onClick={() => dispatch(setSearch(''))}
                 ><GrClose/>
                 </div>
             }

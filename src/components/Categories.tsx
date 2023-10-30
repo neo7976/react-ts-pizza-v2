@@ -1,11 +1,16 @@
 import React, {FC, useState} from 'react';
+import {setCategoryId} from "../redux/slices/filtersSlice";
+import {useAppDispatch, useAppSelector} from "../hooks/hook";
+import {setCurrentPage} from "../redux/slices/paginationSlice";
 
-interface CategoriesProps {
-    value: number,
-    onChangeCategory: (i: number) => void
-}
+const Categories: FC = () => {
+    const onChangeCategory = (categoryId: number) => {
+        dispatch(setCategoryId(categoryId))
+        dispatch(setCurrentPage(1));
+    }
 
-const Categories: FC<CategoriesProps> = ({value, onChangeCategory}) => {
+    const dispatch = useAppDispatch();
+    const categoryId = useAppSelector((state) => state.filter.categoryId)
     const categories = [
         "Все",
         "Мясные",
@@ -22,7 +27,7 @@ const Categories: FC<CategoriesProps> = ({value, onChangeCategory}) => {
                     <li
                         key={index}
                         onClick={() => onChangeCategory(index)}
-                        className={value === index ? 'active' : ''}
+                        className={categoryId === index ? 'active' : ''}
                     >
                         {categoryName}
                     </li>

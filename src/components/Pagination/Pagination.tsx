@@ -1,24 +1,24 @@
 import React, {FC} from "react";
 import ReactPaginate from "react-paginate";
 import styles from './Pagination.module.scss'
+import {useAppDispatch, useAppSelector} from "../../hooks/hook";
+import {setCurrentPage} from "../../redux/slices/paginationSlice";
 
 
-interface PaginationProps {
-    onChangePage: (number: number) => void,
-    countPage: number
-}
+const Pagination: FC = () => {
+    const dispatch = useAppDispatch();
+    const {countPage} = useAppSelector((state) => state.pagination)
 
-const Pagination:FC<PaginationProps> = ({ onChangePage, countPage }) => {
     return (
         <ReactPaginate className={styles.root}
                        breakLabel="..."
                        nextLabel=">"
-                       onPageChange={(event => onChangePage(event.selected + 1))}
+                       onPageChange={(event => dispatch(setCurrentPage(event.selected + 1)))}
                        pageRangeDisplayed={5}
                        pageCount={countPage}
                        previousLabel="<"
                        renderOnZeroPageCount={null}
-        />
+                       marginPagesDisplayed={0}/>
     );
 };
 

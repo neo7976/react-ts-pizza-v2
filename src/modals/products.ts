@@ -4,6 +4,11 @@ export interface Root {
     data: IProduct[]
 }
 
+export interface ISortCategory {
+    categoryId: number,
+    sort: ISort
+}
+
 export interface IProduct {
     id: number;
     imageUrl: string;

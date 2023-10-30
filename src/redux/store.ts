@@ -1,14 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit'
-import filterSlice from "./slices/filterSlice";
-// ...
+import filter from "./slices/filtersSlice";
+import search from "./slices/searchSlice";
+import pagination from "./slices/paginationSlice";
 
 export const store = configureStore({
     reducer: {
-        counter: filterSlice
+        filter,
+        search,
+        pagination
     },
 })
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
