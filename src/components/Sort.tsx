@@ -1,24 +1,26 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {ISort} from "../modals/products";
+import {useAppDispatch, useAppSelector} from "../hooks/hook";
+import {setSort} from "../redux/slices/filtersSlice";
 
-interface SortProps {
-    value: ISort,
-    onChangeSort: (i: ISort) => void
-}
 
-const Sort: FC<SortProps> = ({value, onChangeSort}) => {
+const Sort = () => {
+
+    const dispatch = useAppDispatch();
+    const sort = useAppSelector((state) => state.filter.sort)
 
     const [open, setOpen] = useState(false);
-    const list = [
+    const list: ISort[] = [
         {name: 'популярности', sortProperty: 'rating'},
         {name: 'цене', sortProperty: 'price'},
         {name: 'алфавиту', sortProperty: 'title'}
     ];
 
-    const onClickItem = (index: ISort) => {
-        onChangeSort(index);
+    const onClickItem = (obj: ISort) => {
+        dispatch(setSort(obj))
         setOpen(false);
     }
+
     return (
         <div className="sort">
             <div className="sort__label">
@@ -35,7 +37,7 @@ const Sort: FC<SortProps> = ({value, onChangeSort}) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                <span onClick={() => setOpen(!open)}>{value.name}</span>
+                <span onClick={() => setOpen(!open)}>{sort.name}</span>
             </div>
             {open && <div className="sort__popup">
                 <ul>
@@ -43,7 +45,7 @@ const Sort: FC<SortProps> = ({value, onChangeSort}) => {
                         <li
                             key={index}
                             onClick={() => onClickItem(obj)}
-                            className={value.sortProperty !== obj.sortProperty ? '' : 'active'}>
+                            className={sort.sortProperty !== obj.sortProperty ? '' : 'active'}>
                             {obj.name}
                         </li>
                     ))}

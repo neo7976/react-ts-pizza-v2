@@ -1,7 +1,7 @@
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from '@reduxjs/toolkit'
 import {RootState} from "../store";
-import {ISortCategory} from "../../modals/products";
+import {ISort, ISortCategory} from "../../modals/products";
 
 
 // Define the initial state using that type
@@ -15,7 +15,7 @@ const initialState: ISortCategory = {
 } as ISortCategory;
 
 export const filterSlice = createSlice({
-    name: 'filters',
+    name: 'filter',
     initialState,
     reducers: {
         // increment: (state) => {
@@ -30,10 +30,13 @@ export const filterSlice = createSlice({
         setCategoryId(state, action: PayloadAction<number>) {
             state.categoryId = action.payload;
         },
+        setSort(state, action: PayloadAction<ISort>) {
+            state.sort = action.payload;
+        },
     },
 })
 
-export const {setCategoryId} = filterSlice.actions
+export const {setCategoryId, setSort} = filterSlice.actions
 
 // export const selectCount = (state: RootState) => state.filters
 
