@@ -37,13 +37,24 @@ export const filterSlice = createSlice({
             state.searchValue = action.payload;
         },
         setFilters(state, action: PayloadAction<FilterSliceState>) {
-            state.categoryId = Number(action.payload.categoryId);
-            state.sort = action.payload.sort;
-        }
+            if (Object.keys(action.payload).length) {
+                state.currentPage = Number(action.payload.currentPage);
+                state.categoryId = Number(action.payload.categoryId);
+                state.sort = action.payload.sort;
+                state.countPage = action.payload.countPage;
+            } else {
+                state.currentPage = 1;
+                state.categoryId = 0;
+                state.sort = {
+                    name: 'популярности',
+                    sortProperty: 'rating',
+                };
+            }
+        },
     },
-})
+});
 
-export const {setCategoryId, setSort, setCurrentPage, setSearch,setCountPage,setFilters} = filterSlice.actions
+export const {setCategoryId, setSort, setCurrentPage, setSearch, setCountPage, setFilters} = filterSlice.actions
 
 // export const selectCount = (state: RootState) => state.filters
 

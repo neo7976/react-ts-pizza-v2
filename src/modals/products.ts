@@ -12,6 +12,14 @@ export interface FilterSliceState {
     searchValue: string
 }
 
+export type SearchPizzaParams = {
+    sortProperty: string;
+    order: string;
+    category: string;
+    search: string;
+    currentPage: string;
+};
+
 export interface IProduct {
     id: number;
     imageUrl: string;
