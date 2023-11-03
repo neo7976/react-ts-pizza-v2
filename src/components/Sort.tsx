@@ -3,6 +3,11 @@ import {ISort} from "../modals/products";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
 import {setSort} from "../redux/slices/filtersSlice";
 
+export const sortList: ISort[] = [
+    {name: 'популярности', sortProperty: 'rating'},
+    {name: 'цене', sortProperty: 'price'},
+    {name: 'алфавиту', sortProperty: 'title'}
+];
 
 const Sort = () => {
 
@@ -10,11 +15,7 @@ const Sort = () => {
     const sort = useAppSelector((state) => state.filter.sort)
 
     const [open, setOpen] = useState(false);
-    const list: ISort[] = [
-        {name: 'популярности', sortProperty: 'rating'},
-        {name: 'цене', sortProperty: 'price'},
-        {name: 'алфавиту', sortProperty: 'title'}
-    ];
+
 
     const onClickItem = (obj: ISort) => {
         dispatch(setSort(obj))
@@ -41,7 +42,7 @@ const Sort = () => {
             </div>
             {open && <div className="sort__popup">
                 <ul>
-                    {list.map((obj, index) => (
+                    {sortList.map((obj, index) => (
                         <li
                             key={index}
                             onClick={() => onClickItem(obj)}
