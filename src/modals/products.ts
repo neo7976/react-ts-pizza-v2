@@ -4,9 +4,12 @@ export interface Root {
     data: IProduct[]
 }
 
-export interface ISortCategory {
+export interface FilterSliceState {
     categoryId: number,
-    sort: ISort
+    sort: ISort,
+    countPage: number,
+    currentPage: number,
+    searchValue: string
 }
 
 export interface IProduct {

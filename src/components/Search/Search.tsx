@@ -3,13 +3,13 @@ import styles from './Search.module.scss'
 import {GrClose} from "react-icons/gr";
 import {BsSearch} from "react-icons/bs";
 import {useAppDispatch, useAppSelector} from "../../hooks/hook";
-import {setSearch} from "../../redux/slices/searchSlice";
 import debounce from "lodash.debounce"
+import {setSearch} from "../../redux/slices/filtersSlice";
 
 
 const Search = () => {
     const dispatch = useAppDispatch();
-    const search = useAppSelector((state) => state.search.searchValue)
+    const search = useAppSelector((state) => state.filter.searchValue)
     const [value, setValue] = useState("");
 
     const inputRef = React.useRef<HTMLInputElement>(null);

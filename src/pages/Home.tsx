@@ -1,24 +1,39 @@
 import React, {FC, useEffect, useState} from 'react';
+import qs from 'qs'
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import Sort, {sortList} from "../components/Sort";
 import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
 import pizzaJson from "../assets/pizza.json";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
-import {IProduct, Root} from "../modals/products";
+import {IProduct, ISort, Root} from "../modals/products";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
-import {setCountPage, setCurrentPage} from "../redux/slices/paginationSlice";
+import {useNavigate} from "react-router-dom";
+import {setCountPage, setCurrentPage, setFilters} from "../redux/slices/filtersSlice";
 
 const Home: FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
 
-    const search = useAppSelector((state) => state.search.searchValue)
-    const {categoryId, sort} = useAppSelector((state) => state.filter)
-    const {currentPage} = useAppSelector((state) => state.pagination)
+    const {categoryId, sort, currentPage, searchValue:search} = useAppSelector((state) => state.filter)
 
     const [items, setItems] = useState<IProduct[]>([]);
+
+    // useEffect(() => {
+    //     if (window.location.search) {
+    //         const params = qs.parse(window.location.search.substring(1));
+    //         console.log(params);
+    //
+    //         const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
+    //         dispatch(setFilters({
+    //             ...params, sort
+    //         }))
+    //     }
+    // }, [])
+
+
     useEffect(
         () => {
             setIsLoading(true)
@@ -32,6 +47,17 @@ const Home: FC = () => {
         () => {
             dispatch(setCurrentPage(1));
         }, [categoryId, sort.sortProperty, search])
+
+    useEffect(() => {
+        const queryString = qs.stringify({
+            sortProperty: sort.sortProperty,
+            categoryId: categoryId,
+            currentPage: currentPage,
+        });
+
+        navigate(`?${queryString}`);
+    }, [categoryId, sort.sortProperty, search, currentPage]);
+
 
     async function getPizzas() {
         // Попробовать сделать на сервере отправку данных по количеству страниц от запроса и настроить там тоже пагинацию

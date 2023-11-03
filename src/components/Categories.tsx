@@ -1,7 +1,6 @@
 import React, {FC, useState} from 'react';
-import {setCategoryId} from "../redux/slices/filtersSlice";
+import {setCategoryId, setCurrentPage} from "../redux/slices/filtersSlice";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
-import {setCurrentPage} from "../redux/slices/paginationSlice";
 
 const Categories: FC = () => {
     const onChangeCategory = (categoryId: number) => {
