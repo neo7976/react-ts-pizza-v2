@@ -21,7 +21,7 @@ export type SearchPizzaParams = {
 };
 
 export interface IProduct {
-    id: number;
+    id: string;
     imageUrl: string;
     title: string;
     types: number[];

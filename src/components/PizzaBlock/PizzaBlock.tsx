@@ -1,15 +1,35 @@
 import React, {FC, useState} from 'react';
 import {IProduct} from "../../modals/products";
+import {useAppDispatch, useAppSelector} from "../../hooks/hook";
+import {CartItem} from "../../redux/slices/cart/types";
+import {addItem} from "../../redux/slices/cart/cartSlice";
 
 interface PizzaBlockProps {
     product: IProduct
 }
 
 const PizzaBlock: FC<PizzaBlockProps> = ({product}) => {
+    const dispatch = useAppDispatch();
     const [pizzaCount, setPizzaCount] = useState(0);
+    const cartItem = useAppSelector((state) => state.cart.items.find((item) => item.id === product.id))
     const [activeSize, setActiveSize] = useState(0);
     const [activeType, setActiveType] = useState(0);
-    const typesNames = ['Тонкое', 'Традиционное']
+    const typeNames = ['Тонкое', 'Традиционное']
+
+    const addedCount = cartItem ? cartItem.count : 0;
+
+    const onClickAdd = () => {
+        const item: CartItem = {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            imageUrl: product.imageUrl,
+            type: typeNames[activeType],
+            size: product.sizes[activeSize],
+            count: 0
+        };
+        dispatch(addItem(item));
+    }
 
     return (
         <div className='pizza-block-wrapper'>
@@ -27,7 +47,7 @@ const PizzaBlock: FC<PizzaBlockProps> = ({product}) => {
                                 key={typeId}
                                 onClick={() => setActiveType(typeId)}
                                 className={activeType === typeId ? 'active' : ''}>
-                                {typesNames[typeId]}
+                                {typeNames[typeId]}
                             </li>
                         ))}
                     </ul>
@@ -45,7 +65,7 @@ const PizzaBlock: FC<PizzaBlockProps> = ({product}) => {
                 <div className="pizza-block__bottom">
                     <div className="pizza-block__price">от {product.price} ₽</div>
                     <button
-                        onClick={() => setPizzaCount(pizzaCount + 1)}
+                        onClick={onClickAdd}
                         className="button button--outline button--add"
                     >
                         <div>
@@ -62,7 +82,7 @@ const PizzaBlock: FC<PizzaBlockProps> = ({product}) => {
                                 />
                             </svg>
                             <span>Добавить</span>
-                            <i>{pizzaCount}</i>
+                            {addedCount > 0 && <i>{addedCount}</i>}
                         </div>
                     </button>
                 </div>
