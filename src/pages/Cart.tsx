@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../hooks/hook";
+import CartItemPizza from "../components/CartItem";
+import {CartItem} from "../redux/slices/cart/types";
+
 
 const Cart = () => {
     // const totalCount = 0
-
+    const dispatch = useAppDispatch();
+    const items = useAppSelector((state) => state.cart.items)
     return (
         <div className="container container--cart">
             {/*{totalCount ? (*/}
@@ -81,6 +86,9 @@ const Cart = () => {
                         </div>
                     </div>
                     <div className="content__items">
+                        {items.map((item: CartItem) => (
+                            <CartItemPizza key={item.id} item={item} />
+                        ))}
                     </div>
                     <div className="cart__bottom">
                         <div className="cart__bottom-details">
