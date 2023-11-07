@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {ISort} from "../modals/products";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
 import {setSort} from "../redux/slices/filtersSlice";
@@ -13,6 +13,7 @@ const Sort = () => {
 
     const dispatch = useAppDispatch();
     const sort = useAppSelector((state) => state.filter.sort)
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const [open, setOpen] = useState(false);
 
@@ -22,8 +23,23 @@ const Sort = () => {
         setOpen(false);
     }
 
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!event.composedPath().includes(sortRef.current!)) {
+                setOpen(false);
+            }
+        }
+        document.body.addEventListener('click', handleClickOutside);
+        return () => {
+            // console.log('Sort unmount - Удаляем обработчик');
+            document.body.removeEventListener('click', handleClickOutside);
+        }
+    }, []);
+
     return (
-        <div className="sort">
+        <div
+            ref={sortRef}
+            className="sort">
             <div className="sort__label">
                 <svg
                     width="10"
