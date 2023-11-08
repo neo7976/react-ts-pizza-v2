@@ -5,6 +5,7 @@ import {useAppSelector} from "../hooks/hook";
 
 const Header: FC = () => {
     const {items, totalPrice} = useAppSelector(state => state.cart);
+    const totalCount = items.reduce(( sum, item) => sum + item.count, 0)
 
     return (
         <div className="header">
@@ -52,7 +53,7 @@ const Header: FC = () => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                        <span>{items.length}</span>
+                        <span>{totalCount}</span>
                     </Link>
                 </div>
             </div>
