@@ -15,12 +15,12 @@ const CartItemPizza: FC<CartItemProps> = ({item}) => {
     };
 
     const onClickMinus = () => {
-        dispatch(minusItem(item.id));
+        dispatch(minusItem(item));
     };
 
     const onClickRemove = () => {
         if (window.confirm('Ты действительно хочешь удалить товар?')) {
-            dispatch(removeItem(item.id));
+            dispatch(removeItem(item));
         }
     };
 

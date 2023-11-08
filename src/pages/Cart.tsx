@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
 import CartItemPizza from "../components/CartItem";
 import {CartItem} from "../redux/slices/cart/types";
-import {clearItems, removeItem} from "../redux/slices/cart/cartSlice";
+import {clearItems} from "../redux/slices/cart/cartSlice";
 import CartEmpty from "../components/CartEmpty";
 
 
@@ -12,7 +12,7 @@ const Cart = () => {
     const dispatch = useAppDispatch();
     const {items, totalPrice} = useAppSelector((state) => state.cart)
     const totalCount = items.reduce((sum, item) => sum + item.count, 0)
-    const onClickRemove = () => {
+    const onClickClear = () => {
         if (window.confirm('Ты действительно хочешь очистить корзину?')) {
             dispatch(clearItems());
         }
@@ -55,7 +55,7 @@ const Cart = () => {
                         </h2>
                         <div
                             className="cart__clear"
-                            onClick={onClickRemove}>
+                            onClick={onClickClear}>
                             <svg
                                 width="20"
                                 height="20"

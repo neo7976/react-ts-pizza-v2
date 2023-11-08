@@ -1,6 +1,5 @@
 import type {PayloadAction} from '@reduxjs/toolkit'
 import {createSlice} from '@reduxjs/toolkit'
-import {IProduct} from "../../../modals/products";
 import {CartItem, CartSliceState} from "./types";
 
 const initialState: CartSliceState = {
@@ -20,7 +19,7 @@ export const cartSlice = createSlice({
         //     }, 0);
         // },
         addItem(state, action: PayloadAction<CartItem>) {
-            const findItem = state.items.find(item => item.id === action.payload.id)
+            const findItem = state.items.find(item => item.id === action.payload.id && item.size === action.payload.size && item.type === action.payload.type)
             if (findItem) {
                 findItem.count++;
             } else {
@@ -33,8 +32,8 @@ export const cartSlice = createSlice({
                 return item.price * item.count + sum
             }, 0);
         },
-        minusItem(state, action: PayloadAction<string>) {
-            const findItem = state.items.find(item => item.id === action.payload);
+        minusItem(state, action: PayloadAction<CartItem>) {
+            const findItem = state.items.find(item => item.id === action.payload.id && item.size === action.payload.size && item.type === action.payload.type)
             if (findItem) {
                 findItem.count--;
             }
@@ -42,8 +41,11 @@ export const cartSlice = createSlice({
                 return item.price * item.count + sum
             }, 0);
         },
-        removeItem(state, action: PayloadAction<string>) {
-            state.items = state.items.filter(item => item.id !== action.payload)
+        removeItem(state, action: PayloadAction<CartItem>) {
+            const findItem = state.items.find(item => item.id === action.payload.id && item.size === action.payload.size && item.type === action.payload.type)
+            if (findItem) {
+                state.items = state.items.filter(item => item !== findItem)
+            }
             state.totalPrice = state.items.reduce((sum, item) => {
                 return item.price * item.count + sum
             }, 0);

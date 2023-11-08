@@ -10,12 +10,12 @@ interface PizzaBlockProps {
 
 const PizzaBlock: FC<PizzaBlockProps> = ({product}) => {
     const dispatch = useAppDispatch();
-    const [pizzaCount, setPizzaCount] = useState(0);
     const cartItem = useAppSelector((state) => state.cart.items.find((item) => item.id === product.id))
     const [activeSize, setActiveSize] = useState(0);
     const [activeType, setActiveType] = useState(0);
     const typeNames = ['Тонкое', 'Традиционное']
 
+    //подумать, как сделать изменения под разные размеры и типы пицц, чтобы показывался свой счётчик
     const addedCount = cartItem ? cartItem.count : 0;
 
     const onClickAdd = () => {
