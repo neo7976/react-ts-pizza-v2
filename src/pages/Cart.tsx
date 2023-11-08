@@ -3,15 +3,23 @@ import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
 import CartItemPizza from "../components/CartItem";
 import {CartItem} from "../redux/slices/cart/types";
+import {clearItems, removeItem} from "../redux/slices/cart/cartSlice";
+import CartEmpty from "../components/CartEmpty";
 
 
 const Cart = () => {
     // const totalCount = 0
     const dispatch = useAppDispatch();
-    const items = useAppSelector((state) => state.cart.items)
+    const {items, totalPrice} = useAppSelector((state) => state.cart)
+    const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+    const onClickRemove = () => {
+        if (window.confirm('Ты действительно хочешь очистить корзину?')) {
+            dispatch(clearItems());
+        }
+    };
     return (
         <div className="container container--cart">
-            {/*{totalCount ? (*/}
+            {totalCount ? (
                 <div className="cart">
                     <div className="cart__top">
                         <h2 className="content__title">
@@ -45,7 +53,9 @@ const Cart = () => {
                             </svg>
                             Корзина
                         </h2>
-                        <div className="cart__clear">
+                        <div
+                            className="cart__clear"
+                            onClick={onClickRemove}>
                             <svg
                                 width="20"
                                 height="20"
@@ -81,22 +91,21 @@ const Cart = () => {
                                     strokeLinejoin="round"
                                 />
                             </svg>
-
                             <span>Очистить корзину</span>
                         </div>
                     </div>
                     <div className="content__items">
                         {items.map((item: CartItem) => (
-                            <CartItemPizza key={item.id} item={item} />
+                            <CartItemPizza key={item.id} item={item}/>
                         ))}
                     </div>
                     <div className="cart__bottom">
                         <div className="cart__bottom-details">
               <span>
-                Всего пицц: <b>{} шт.</b>
+                Всего пицц: <b>{totalCount} шт.</b>
               </span>
                             <span>
-                Сумма заказа: <b>{} ₽</b>
+                Сумма заказа: <b>{totalPrice} ₽</b>
               </span>
                         </div>
                         <div className="cart__bottom-buttons">
@@ -125,23 +134,10 @@ const Cart = () => {
                         </div>
                     </div>
                 </div>
-            {/*) : (*/}
-            {/*    <div className="cart cart--empty">*/}
-            {/*        <h2>*/}
-            {/*            Корзина пустая <i>😕</i>*/}
-            {/*        </h2>*/}
-            {/*        <p>*/}
-            {/*            Вероятней всего, вы не заказывали ещё пиццу.*/}
-            {/*            <br/>*/}
-            {/*            Для того, чтобы заказать пиццу, перейди на главную страницу.*/}
-            {/*        </p>*/}
-            {/*        <img alt="Empty cart"/>*/}
-            {/*        <Link to="/" className="button button--black">*/}
-            {/*            <span>Вернуться назад</span>*/}
-            {/*        </Link>*/}
-            {/*    </div>*/}
-            {/*)*/}
-            {/*}*/}
+            ) : (
+                <CartEmpty/>
+            )
+            }
         </div>
     );
 }
