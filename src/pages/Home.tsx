@@ -5,6 +5,7 @@ import Sort from "../components/Sort";
 import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
 // import pizzaJson from "../assets/pizza.json";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
+import {fetchPizzas} from '../redux/slices/pizza/pizzaSlice'
 import {Root} from "../modals/products";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
@@ -82,9 +83,18 @@ const Home: FC = () => {
             const startWithTitle = search.trim() !== '' ? `startWithTitle=${search}` : ''
             const limit = `limit=${4}`
             const page = `page=${currentPage}`
-            const {data} = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
-            dispatch(setItems(data.data))
-            dispatch(setCountPage(data.pageCount))
+            const sortBy = sort.sortProperty;
+            // const {data} = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
+            // dispatch(setItems(data.data))
+            dispatch(fetchPizzas({
+                url,
+                sortBy,
+                category,
+                startWithTitle,
+                limit,
+                page,
+            }))
+            // dispatch(setCountPage(data.pageCount))
         } catch (error) {
             alert('Получили ошибку при загрузке пицц');
             console.log(error);
