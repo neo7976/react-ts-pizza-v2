@@ -76,15 +76,21 @@ const Home: FC = () => {
 
     async function getPizzas() {
         // Попробовать сделать на сервере отправку данных по количеству страниц от запроса и настроить там тоже пагинацию
-        const url: string = 'http://localhost:9004/'
-        const category = categoryId > 0 ? `category=${categoryId}` : '';
-        const startWithTitle = search.trim() !== '' ? `startWithTitle=${search}` : ''
-        const limit = `limit=${4}`
-        const page = `page=${currentPage}`
-        const response = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
-        setItems(response.data.data);
-        dispatch(setCountPage(response.data.pageCount))
-        setIsLoading(false)
+        try {
+            const url: string = 'http://localhost:9004/'
+            const category = categoryId > 0 ? `category=${categoryId}` : '';
+            const startWithTitle = search.trim() !== '' ? `startWithTitle=${search}` : ''
+            const limit = `limit=${4}`
+            const page = `page=${currentPage}`
+            const response = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
+            setItems(response.data.data);
+            dispatch(setCountPage(response.data.pageCount))
+        } catch (error) {
+            alert('Получили ошибку при загрузке пицц');
+            console.log(error);
+        } finally {
+            setIsLoading(false)
+        }
     }
 
 
