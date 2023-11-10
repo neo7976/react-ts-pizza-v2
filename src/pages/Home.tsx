@@ -1,16 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
 import qs from 'qs'
 import Categories from "../components/Categories";
-import Sort, {sortList} from "../components/Sort";
+import Sort from "../components/Sort";
 import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
-import pizzaJson from "../assets/pizza.json";
+// import pizzaJson from "../assets/pizza.json";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
-import {IProduct, Root, SearchPizzaParams} from "../modals/products";
+import {Root} from "../modals/products";
 import axios from "axios";
 import Pagination from "../components/Pagination/Pagination";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
 import {useNavigate} from "react-router-dom";
-import {setCountPage, setCurrentPage, setFilters} from "../redux/slices/filtersSlice";
+import {setCountPage, setCurrentPage} from "../redux/slices/filtersSlice";
+import {setItems} from "../redux/slices/pizza/pizzaSlice";
 
 const Home: FC = () => {
     const dispatch = useAppDispatch();
@@ -21,8 +22,7 @@ const Home: FC = () => {
     const isMounted = React.useRef(false);
 
     const {categoryId, sort, currentPage, searchValue: search} = useAppSelector((state) => state.filter)
-
-    const [items, setItems] = useState<IProduct[]>([]);
+    const items = useAppSelector((state) => state.pizza.items)
 
     // Если изменили параметры и был первый рендер
     useEffect(() => {
@@ -82,9 +82,9 @@ const Home: FC = () => {
             const startWithTitle = search.trim() !== '' ? `startWithTitle=${search}` : ''
             const limit = `limit=${4}`
             const page = `page=${currentPage}`
-            const response = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
-            setItems(response.data.data);
-            dispatch(setCountPage(response.data.pageCount))
+            const {data} = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
+            dispatch(setItems(data.data))
+            dispatch(setCountPage(data.pageCount))
         } catch (error) {
             alert('Получили ошибку при загрузке пицц');
             console.log(error);
@@ -104,8 +104,8 @@ const Home: FC = () => {
             <div className="content__items">
                 {
                     isLoading ? [...new Array(4)].map((_, index) => <PizzaBlockSkeleton key={index}/>)
-                        : (items.map((items) =>
-                            <PizzaBlock key={items.id} product={items}/>))
+                        : (items.map((item) =>
+                            <PizzaBlock key={item.id} product={item}/>))
                 }
             </div>
             <Pagination/>
