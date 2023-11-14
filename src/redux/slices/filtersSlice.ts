@@ -7,7 +7,6 @@ import {ISort, FilterSliceState} from "../../modals/products";
 // Define the initial state using that type
 const initialState: FilterSliceState = {
     categoryId: 0,
-    countPage: 1,
     currentPage: 1,
     searchValue: '',
     sort: {
@@ -27,9 +26,9 @@ export const filterSlice = createSlice({
         setSort(state, action: PayloadAction<ISort>) {
             state.sort = action.payload;
         },
-        setCountPage(state, action: PayloadAction<number>) {
-            state.countPage = action.payload;
-        },
+        // setCountPage(state, action: PayloadAction<number>) {
+        //     state.countPage = action.payload;
+        // },
         setCurrentPage(state, action: PayloadAction<number>) {
             state.currentPage = action.payload;
         },
@@ -41,7 +40,7 @@ export const filterSlice = createSlice({
                 state.currentPage = Number(action.payload.currentPage);
                 state.categoryId = Number(action.payload.categoryId);
                 state.sort = action.payload.sort;
-                state.countPage = action.payload.countPage;
+                // state.countPage = action.payload.countPage;
             } else {
                 state.currentPage = 1;
                 state.categoryId = 0;
@@ -54,7 +53,7 @@ export const filterSlice = createSlice({
     },
 });
 
-export const {setCategoryId, setSort, setCurrentPage, setSearch, setCountPage, setFilters} = filterSlice.actions
+export const {setCategoryId, setSort, setCurrentPage, setSearch,  setFilters} = filterSlice.actions
 
 // export const selectCount = (state: RootState) => state.filters
 

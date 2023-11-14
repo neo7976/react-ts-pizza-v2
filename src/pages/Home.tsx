@@ -1,28 +1,26 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import qs from 'qs'
 import Categories from "../components/Categories";
-import Sort, {sortList} from "../components/Sort";
+import Sort from "../components/Sort";
 import PizzaBlockSkeleton from "../components/PizzaBlock/PizzaBlockSkeleton";
-import pizzaJson from "../assets/pizza.json";
+// import pizzaJson from "../assets/pizza.json";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
-import {IProduct, Root, SearchPizzaParams} from "../modals/products";
-import axios from "axios";
+import {fetchPizzas} from '../redux/slices/pizza/pizzaSlice'
 import Pagination from "../components/Pagination/Pagination";
 import {useAppDispatch, useAppSelector} from "../hooks/hook";
 import {useNavigate} from "react-router-dom";
-import {setCountPage, setCurrentPage, setFilters} from "../redux/slices/filtersSlice";
+import {setCurrentPage} from "../redux/slices/filtersSlice";
+import {StatusLoading} from "../redux/slices/pizza/types";
 
 const Home: FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const [isLoading, setIsLoading] = useState(false);
     const isSearch = React.useRef(false);
     //добавление поиска в url
     const isMounted = React.useRef(false);
 
     const {categoryId, sort, currentPage, searchValue: search} = useAppSelector((state) => state.filter)
-
-    const [items, setItems] = useState<IProduct[]>([]);
+    const {status, items} = useAppSelector((state) => state.pizza)
 
     // Если изменили параметры и был первый рендер
     useEffect(() => {
@@ -58,7 +56,7 @@ const Home: FC = () => {
 
     useEffect(
         () => {
-            setIsLoading(true)
+            // setIsLoading(true)
             window.scrollTo(0, 0);
             if (!isSearch.current) {
                 getPizzas();
@@ -75,16 +73,21 @@ const Home: FC = () => {
 
 
     async function getPizzas() {
-        // Попробовать сделать на сервере отправку данных по количеству страниц от запроса и настроить там тоже пагинацию
         const url: string = 'http://localhost:9004/'
         const category = categoryId > 0 ? `category=${categoryId}` : '';
         const startWithTitle = search.trim() !== '' ? `startWithTitle=${search}` : ''
         const limit = `limit=${4}`
         const page = `page=${currentPage}`
-        const response = await axios.get<Root>(`${url}pizzas/?${page}&${limit}&${category}&${startWithTitle}&sortBy=${sort.sortProperty}&order=desc`);
-        setItems(response.data.data);
-        dispatch(setCountPage(response.data.pageCount))
-        setIsLoading(false)
+        const sortBy = sort.sortProperty;
+
+        dispatch(fetchPizzas({
+            url,
+            sortBy,
+            category,
+            startWithTitle,
+            limit,
+            page,
+        }))
     }
 
 
@@ -95,13 +98,23 @@ const Home: FC = () => {
                 <Sort/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
-            <div className="content__items">
-                {
-                    isLoading ? [...new Array(4)].map((_, index) => <PizzaBlockSkeleton key={index}/>)
-                        : (items.map((items) =>
-                            <PizzaBlock key={items.id} product={items}/>))
-                }
-            </div>
+            {
+                status === StatusLoading.ERROR ?
+                    (<div className='content__error-info'>
+                        <h2>Произошла ошибка 🧐</h2>
+                        <p>
+                           К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже
+                        </p>
+                    </div>) : (<div className="content__items">
+                        {
+                            (status === StatusLoading.LOADING) ? [...new Array(4)].map((_, index) => <PizzaBlockSkeleton
+                                    key={index}/>)
+                                : (items.map((item) =>
+                                    <PizzaBlock key={item.id} product={item}/>))
+                        }
+                    </div>)
+            }
+
             <Pagination/>
         </div>
     );

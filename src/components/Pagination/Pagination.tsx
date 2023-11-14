@@ -7,7 +7,7 @@ import {setCurrentPage} from "../../redux/slices/filtersSlice";
 
 const Pagination: FC = () => {
     const dispatch = useAppDispatch();
-    const {countPage} = useAppSelector((state) => state.filter)
+    const {countPage} = useAppSelector((state) => state.pizza)
 
     return (
         <ReactPaginate className={styles.root}
