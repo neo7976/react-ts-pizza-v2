@@ -36,16 +36,16 @@ export const pizzaSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchPizzas.pending, (state, action) => {
+        builder.addCase(fetchPizzas.pending, (state) => {
             state.status = StatusLoading.LOADING;
             state.items = [];
         })
-        builder.addCase(fetchPizzas.fulfilled, (state,action) => {
+        builder.addCase(fetchPizzas.fulfilled, (state, action) => {
             state.items = action.payload.data
-            state.countPage=action.payload.pageCount
+            state.countPage = action.payload.pageCount
             state.status = StatusLoading.SUCCESS;
         })
-        builder.addCase(fetchPizzas.rejected, (state, action) => {
+        builder.addCase(fetchPizzas.rejected, (state) => {
             console.log('Ошибка получения данных с сервера');
             state.items = [];
             state.status = StatusLoading.ERROR;
