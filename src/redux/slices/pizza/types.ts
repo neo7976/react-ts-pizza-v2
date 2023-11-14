@@ -9,6 +9,28 @@ export type Pizza = {
     rating: number;
 }
 
+export type Params = {
+    url: string,
+    sortBy: string,
+    category: string,
+    startWithTitle: string,
+    limit: string,
+    page: string,
+}
+
+export interface SearchPizzaParams extends Params {
+
+}
+
 export interface PizzaSliceState {
     items: Pizza[];
+    status: StatusLoading,
+    countPage: number
+}
+
+export enum StatusLoading {
+    NONE = (''),
+    LOADING = ('loading'),
+    SUCCESS = ('success'),
+    ERROR = ('error'),
 }

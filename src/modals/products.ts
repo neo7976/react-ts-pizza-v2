@@ -1,24 +1,15 @@
-export interface Root {
+export interface Root<T> {
     pageCount: number,
     total: number,
-    data: IProduct[]
+    data: T[]
 }
 
 export interface FilterSliceState {
     categoryId: number,
     sort: ISort,
-    countPage: number,
     currentPage: number,
     searchValue: string
 }
-
-export type SearchPizzaParams = {
-    sortProperty: string;
-    order: string;
-    category: string;
-    search: string;
-    currentPage: string;
-};
 
 export interface IProduct {
     id: string;
